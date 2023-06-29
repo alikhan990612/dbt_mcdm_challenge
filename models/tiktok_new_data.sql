@@ -1,8 +1,8 @@
-with bing_new_data as 
+with tiktok_new_data as 
 (
 select ad_id, 
-       null add_to_cart, 
-       adset_id, 
+       add_to_cart, 
+       adgroup_id adset_id, 
        campaign_id, 
        channel, 
        clicks, 
@@ -10,21 +10,21 @@ select ad_id,
        null creative_id, 
        date, 
        null engagements, 
-       imps impressions, 
-       null installs, 
+       impressions, 
+       rt_installs + skan_app_install installs, 
        null likes, 
        null link_clicks, 
        null placement_id, 
        null post_click_conversions, 
        null post_view_conversions, 
        null posts, 
-       null purchase, 
-       null registrations,
-       revenue, 
+       purchase, 
+       registrations,
+       null revenue, 
        null shares, 
        spend, 
-       conv total_conversions, 
-       null video_views 
-from {{ ref('src_ads_bing_all_data') }}
+       skan_conversion + conversions total_conversions, 
+       video_views
+from {{ ref('src_ads_tiktok_ads_all_data') }}
 )
-select * from bing_new_data
+select * from tiktok_new_data
