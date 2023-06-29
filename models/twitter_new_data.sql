@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='view'
+  )
+}}
+
 with twitter_new_data as 
 (
 select null ad_id, 

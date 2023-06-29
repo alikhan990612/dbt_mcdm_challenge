@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='view'
+  )
+}}
+
 with all_data as
 (
     select * from {{ref('bing_new_data')}}

@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='view'
+  )
+}}
+
 with tiktok_new_data as 
 (
 select ad_id, 
