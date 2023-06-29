@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='view'
+  )
+}}
+
 with facebook_new_data as 
 (
 select ad_id, 

@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: bing_new_data
+    columns:
+      - name: ad_id
+        tests:
+          - unique
+          - not_null
+  - name: facebook_new_data
+    columns:
+      - name: ad_id
+        tests:
+          - unique
+          - not_null
+  - name: tiktok_new_data
+    columns:
+      - name: ad_id
+        tests:
+          - unique
+          - not_null
+  - name: twitter_new_data
+    columns:
+      - name: ad_id
+        tests:
+          - unique
+          - not_null
+

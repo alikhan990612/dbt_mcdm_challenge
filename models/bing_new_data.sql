@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='view'
+  )
+}}
+
 with bing_new_data as 
 (
 select ad_id, 
