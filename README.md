@@ -22,7 +22,7 @@ The repository includes raw data from various ad platforms, as well as the MCDM 
 To build the seeds, run `dbt seed` in the dbt Cloud console. Once the seeds have been built, you can access the data using `ref()`. For example, you can use `select * from {{ ref('src_ads_bing_all_data')}}` to access data from the `src_ads_bing_all_data` seed.
 
 Note: Clone not this already completed project, but the original task at this link https://github.com/technomonah/dbt_mcdm_challenge.
-##->
+###->
 - After cloning, connect to your repository on the dbt Cloud platform.
 - Now we need to create a folder called models.
 - Inside your new folder, create files of type ".sql" and name them relative to the names of the seeds.
@@ -32,7 +32,7 @@ Note: Clone not this already completed project, but the original task at this li
 - Here we have to create an object combining all the already processed data with the help of what I wrote came out UNION ALL.
 
 Change the way your model is materialized.
-##->
+###->
 - Edit your dbt_project.yml file.
 - Update your project name to which you want.
 - Update your models config block to:
@@ -55,7 +55,7 @@ Change the way your model is materialized.
  - Enter the `dbt run --full-refresh` command for this to take effect in your warehouse
 
  Let's create a report (MCDM model) on Bigquery and Looker studio.
- ##->
+ ###->
 - Let's go to our DWH - Bigquery.
 - Choose our Dataset.
 - Select the final model (ads_basic_performance).
