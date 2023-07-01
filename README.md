@@ -1,52 +1,12 @@
-# Marketing common data modelling challenge
-	Welcome to Marketing common data modelling challenge!
-
 ## Task
-	At Improvado, we use marketing common data models (MCDM) to map data from various ad platforms into a single one. MCDM can help marketers with questions like: "Where clicks better on facebook or tiktok?"
-
-Imagine that MCDM-model behind dashboard, is lost somehow. You need to rebuilt it. You have:
-	— raw data from the ad systems (seeds folder),
-	- the MCDM table structure for this report, 
-	- and [dashboard](https://lookerstudio.google.com/reporting/fa668749-b82f-41a8-a12e-f7d9c0733b57/page/tEnnC)
-
-
-In this situation, we've got checklist that you can follow (or not):
-	- Begin a new project in dbt Cloud, utilizing Google Big Query as the DWH.
-	- Use the raw data from the ad platforms and the MCDM table structure for the ads_basic_performance report.
-
-### How to Submit
-please provide answer in the [typeform](https://improvado.typeform.com/to/efqlu4kP)
--   A link to your dbt Cloud repository that contains the completed MCDM for the ads_basic_performance report.
--   A link to the recreated dashboard.
--   A brief set of instructions (in md file in your repo) for adding data from new ad platforms into your MCDM.
-
-## Hints:
-	- *Cost per engage* is just a spended sum divided by sum of engagements
-	- *Conversion cost* is calculated by dividing sum of spended by total conversions count
-	- *Impressions by channel* is a sum of impressions for each channel
-	- *CPC* gets like sum of spended divided by clicks count
+This project is a response to the https://github.com/technomonah/dbt_mcdm_challenge challenge from the Improvado company.
+In short, we have the structure of the final model (table). As well as unprocessed data (also table). It is necessary to create a data model that combines all the unprocessed data. And finally display the model as a diagram using looker studio.
 
 ### Tools
 To complete this task, you might need the following tools:
 -   dbt Cloud
 -   Google Big Query
 -   Google Looker Studio
-
-### Tool Instructions
-To help you get started, here are some resources on how to use the necessary tools:
--   dbt Courses:
-    -   [dbt Fundamentals](https://courses.getdbt.com/courses/fundamentals). Relevant chapters include:
-        -   Setting up dbt Cloud (17 minutes)
-        -   Models and Sources (40 minutes)
-        -   [dbt Cloud and BigQuery for Admins](https://courses.getdbt.com/courses/dbt-cloud-and-bigquery-for-admins) (35 minutes)
--   [How to Use Google BigQuery for FREE](https://levelup.gitconnected.com/how-to-use-google-bigquery-for-free-9c2a65e3a78c#)
-- How to create dashboard Google Looker Studio with Google Big Query
-		![](https://github.com/technomonah/dbt_mcdm_challenge/blob/main/how_to_export_gbq_to_looker.gif)
-
-
-### Additional Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- [Short overview](https://improvado.io/products/mcdm) for Improvado MCDM
 
 ### How to Use the Repository
 This is the foundational repository for your project. Clone it and start your dbt Cloud from it.
@@ -61,9 +21,52 @@ The repository includes raw data from various ad platforms, as well as the MCDM 
 
 To build the seeds, run `dbt seed` in the dbt Cloud console. Once the seeds have been built, you can access the data using `ref()`. For example, you can use `select * from {{ ref('src_ads_bing_all_data')}}` to access data from the `src_ads_bing_all_data` seed.
 
-### Q&A
-	Q: How to validate results for my model? 
-	A: Compare your dashboard with the dashboard from task. If some numbers doesn't match, then some fiels in your model got incorrect mapped  
+Note: Clone not this already completed project, but the original task at this link https://github.com/technomonah/dbt_mcdm_challenge.
+->
+1.After cloning, connect to your repository on the dbt Cloud platform.
+2.Now we need to create a folder called models.
+3.Inside your new folder, create files of type ".sql" and name them relative to the names of the seeds.
+4.You need to create an object (view /table ) inside each file using the CTE based on the DML - SELECT statement.
+5.Don't forget that each column must be in the correct order and type as we are going to create the final model based on this data using UNION ALL.
+6.Let's create another file and name it ads_basic_performance.
+7.Here we have to create an object combining all the already processed data with the help of what I wrote came out UNION ALL.
 
-	Q: What if there're no MCDM sctructure field in raw datasource data?
-	A: So you started understending the main goal of this task :-)	Suggest wich field or fields corresponds to MCDM ones by their meaning. If there're no such fields, then probably datasource just doesnt got them
+Change the way your model is materialized.
+->
+1.Edit your dbt_project.yml file
+2.Update your project name to which you want.
+3.Update your models config block to:
+	models:
+  		mcdm_task(Your project name):
+    		# Applies to all files under models/example/
+    		materialized: view
+4.Edit models configuring the type of the object(Before CTE):
+	{{
+  	 config(
+	  materialized='view'
+  	 )
+	}}
+ 	with your_model_name as (
+		select
+        	ad_id
+        ...
+	)
+ 5.Enter the dbt run command. Your model, should now build as a view
+ 6.Enter the dbt run --full-refresh command for this to take effect in your warehouse
+
+ Let's create a report (MCDM model) on Bigquery and Looker studio.
+ ->
+ 1.Let's go to our DWH - Bigquery.
+ 2.Choose our Dataset.
+ 3.Select the final model (ads_basic_performance).
+ 4.In a new tab, select Export -> Export with Looker Studio
+
+ 5.Add a new diagram.
+ 6.In the setting, select the Channel parameter
+ 7.After that, inside the same setting, add a new indicator -> create a field
+ 8.Write the calculation formula. For example, to find the Conversion cost by channel use -> round(sum(spend) / sum(total_conversions),2)
+
+ At the end we should get this result:
+ https://lookerstudio.google.com/u/0/reporting/884cb01d-1cf7-4d14-8689-8c30f7fa00c4/page/tEnnC
+ 
+ That's all!!!
